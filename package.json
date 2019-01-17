@@ -12,18 +12,11 @@
   },
   "author": "barsh",
   "contributors": [
-    {
-      "name": "Michael Klement",
-      "email": "mklement0@gmail.com",
-      "url": "https://github.com/mklement0"
-    }
+    "Casey Webb <notcaseywebb@gmail.com> (https://caseyWebb.xyz)"
   ],
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/barsh/true-case-path/issues"
   },
-  "homepage": "https://github.com/barsh/true-case-path#readme",
-  "dependencies": {
-    "glob": "^7.1.2"
-  }
+  "homepage": "https://github.com/barsh/true-case-path#readme"
 }

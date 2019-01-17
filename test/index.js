@@ -3,13 +3,16 @@
 const assert = require('assert')
 const path = require('path')
 
-const trueCasePath = require('../')
+const {
+  trueCasePath,
+  trueCasePathSync
+} = require('../')
 
 const expected = path.join(__dirname, 'fixture/fOoBaR/BAZ')
 const requested = expected.toLowerCase()
 
 function testSync() {
-  assert.equal(trueCasePath(requested), expected, 'trueCasePath.sync works')
+  assert.equal(trueCasePathSync(requested), expected, 'trueCasePath.sync works')
 }
 
 function testAsync() {
