@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-    - stable
+    - latest
     - lts/boron
     - lts/carbon
     - lts/dubnium

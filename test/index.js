@@ -8,12 +8,16 @@ const trueCasePath = require('../')
 const expected = path.join(__dirname, 'fixture/fOoBaR/BAZ')
 const requested = expected.toLowerCase()
 
-async function test() {
+function testSync() {
   assert.equal(trueCasePath(requested), expected, 'trueCasePath.sync works')
-  // assert.equal(await trueCasePath(requested), expected, 'trueCasePath (async) works')
 }
 
-test()
+function testAsync() {
+  return trueCasePath(requested).then((actual) => assert.equal(actual, expected, 'trueCasePath (async) works'))
+}
+
+testSync()
+testAsync()
   .then(() => {
     console.log('All tests passed!')
   })
