@@ -15,11 +15,16 @@ function testSync() {
   assert.equal(trueCasePathSync(requested), expected, 'trueCasePath.sync works')
 }
 
+function testRelative() {
+  assert.equal(trueCasePathSync('test/fixture/fOoBaR/BAZ'), expected, 'trueCasePath works with relative paths')
+}
+
 function testAsync() {
   return trueCasePath(requested).then((actual) => assert.equal(actual, expected, 'trueCasePath (async) works'))
 }
 
 testSync()
+testRelative()
 testAsync()
   .then(() => {
     console.log('All tests passed!')

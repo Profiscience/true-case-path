@@ -15,7 +15,7 @@ module.exports = {
 }
 
 function getFilePathSegments(filePath) {
-  return path.resolve(filePath).split(delimiter).filter((s) => s !== '')
+  return path.resolve(process.cwd(), filePath).split(delimiter).filter((s) => s !== '')
 }
 
 function matchCaseInsensitive(fileOrDirectory, directoryContents, filePath) {
@@ -32,7 +32,7 @@ async function trueCasePath(filePath) {
   const segments = getFilePathSegments(filePath)
   let realPath = ''
   if (isWindows) {
-    realPath += segments.unshift().toUpperCase() // drive letter
+    realPath += segments.shift().toUpperCase() // drive letter
   }
   for (const fileOrDirectory of segments) {
     const contents = await readdir(realPath || '/')
@@ -46,7 +46,7 @@ function trueCasePathSync(filePath) {
   const segments = getFilePathSegments(filePath)
   let realPath = ''
   if (isWindows) {
-    realPath += segments.unshift().toUpperCase() // drive letter
+    realPath += segments.shift().toUpperCase() // drive letter
   }
   for (const fileOrDirectory of segments) {
     const contents = fs.readdirSync(realPath || '/')
