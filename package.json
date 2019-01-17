@@ -4,7 +4,7 @@
   "description": "Given a possibly case-variant version of an existing filesystem path, returns the case-exact, normalized version as stored in the filesystem.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test"
   },
   "repository": {
     "type": "git",
