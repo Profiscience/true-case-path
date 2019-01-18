@@ -24,13 +24,14 @@ function testRelative() {
 }
 
 function testSpecialChars() {
-  assert.equal(trueCasePathSync('test/fixture/F*U&N%K)Y'), path.join(__dirname, 'fixture/f*u&n%k)y'), 'works with file names w/ special chars')
+  assert.equal(trueCasePathSync('test/fixture/F[U&N%K)Y'), path.join(__dirname, 'fixture/f[u&n%k)y'), 'works with file names w/ special chars')
 }
 
 Promise.all([
   testSync(),
   testRelative(),
-  testAsync()
+  testAsync(),
+  testSpecialChars()
 ])
   .then(() => {
     console.log('All tests passed!')

@@ -18,8 +18,12 @@ function getFilePathSegments(filePath) {
   return path.resolve(process.cwd(), filePath).split(delimiter).filter((s) => s !== '')
 }
 
+function escapeString(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
 function matchCaseInsensitive(fileOrDirectory, directoryContents, filePath) {
-  const caseInsensitiveRegex = new RegExp(`^${fileOrDirectory}$`, 'i')
+  const caseInsensitiveRegex = new RegExp(`^${escapeString(fileOrDirectory)}$`, 'i')
   for (const file of directoryContents) {
     if (caseInsensitiveRegex.test(file)) {
       return file
