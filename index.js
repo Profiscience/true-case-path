@@ -39,7 +39,7 @@ async function trueCasePath(filePath) {
     realPath += segments.shift().toUpperCase() // drive letter
   }
   for (const fileOrDirectory of segments) {
-    const contents = await readdir(realPath || '/')
+    const contents = await readdir(realPath + delimiter)
     const realCaseFileOrDirectory = matchCaseInsensitive(fileOrDirectory, contents, filePath)
     realPath += delimiter + realCaseFileOrDirectory
   }
@@ -53,7 +53,7 @@ function trueCasePathSync(filePath) {
     realPath += segments.shift().toUpperCase() // drive letter
   }
   for (const fileOrDirectory of segments) {
-    const contents = fs.readdirSync(realPath || '/')
+    const contents = fs.readdirSync(realPath + delimiter)
     const realCaseFileOrDirectory = matchCaseInsensitive(fileOrDirectory, contents, filePath)
     realPath += delimiter + realCaseFileOrDirectory
   }
