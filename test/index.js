@@ -12,15 +12,19 @@ const expected = path.join(__dirname, 'fixture/fOoBaR/BAZ')
 const requested = expected.toLowerCase()
 
 function testSync() {
-  assert.equal(trueCasePathSync(requested), expected, 'trueCasePath.sync works')
-}
-
-function testRelative() {
-  assert.equal(trueCasePathSync('test/fixture/fOoBaR/BAZ'), expected, 'trueCasePath works with relative paths')
+  assert.equal(trueCasePathSync(requested), expected, 'trueCasePathSync works')
 }
 
 function testAsync() {
   return trueCasePath(requested).then((actual) => assert.equal(actual, expected, 'trueCasePath (async) works'))
+}
+
+function testRelative() {
+  assert.equal(trueCasePathSync('test/fixture/fOoBaR/BAZ'), expected, 'works with relative paths')
+}
+
+function testSpecialChars() {
+  assert.equal(trueCasePathSync('test/fixture/F*U&N%K)Y'), path.join(__dirname, 'fixture/f*u&n%k)y'), 'works with file names w/ special chars')
 }
 
 Promise.all([
