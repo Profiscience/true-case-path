@@ -23,9 +23,11 @@ function testAsync() {
   return trueCasePath(requested).then((actual) => assert.equal(actual, expected, 'trueCasePath (async) works'))
 }
 
-testSync()
-testRelative()
-testAsync()
+Promise.all([
+  testSync(),
+  testRelative(),
+  testAsync()
+])
   .then(() => {
     console.log('All tests passed!')
   })
