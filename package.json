@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/barsh/true-case-path.git"
+    "url": "git+https://github.com/Profiscience/true-case-path.git"
   },
   "author": "barsh",
   "contributors": [
@@ -16,7 +16,7 @@
   ],
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/barsh/true-case-path/issues"
+    "url": "https://github.com/Profiscience/true-case-path/issues"
   },
-  "homepage": "https://github.com/barsh/true-case-path#readme"
+  "homepage": "https://github.com/Profiscience/true-case-path#readme"
 }
