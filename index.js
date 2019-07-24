@@ -2,7 +2,7 @@
 
 const { readdir: _readdir, readdirSync } = require('fs')
 const { platform } = require('os')
-const { isAbsolute } = require('path')
+const { isAbsolute, normalize } = require('path')
 const { promisify: pify } = require('util')
 
 const readdir = pify(_readdir)
@@ -22,10 +22,6 @@ function escapeString(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
-function isDriveLetter(str) {
-  return /[a-zA-Z]:/.test(str)
-}
-
 function matchCaseInsensitive(fileOrDirectory, directoryContents, filePath) {
   const caseInsensitiveRegex = new RegExp(
     `^${escapeString(fileOrDirectory)}$`,
@@ -41,14 +37,28 @@ function matchCaseInsensitive(fileOrDirectory, directoryContents, filePath) {
 
 function _trueCasePath({ sync }) {
   return (filePath, basePath) => {
-    if (basePath && !isAbsolute(basePath)) {
-      throw new Error(
-        `[true-case-path]: basePath argument must be absolute. Received "${basePath}"`
-      )
+    if (basePath) {
+      if (!isAbsolute(basePath)) {
+        throw new Error(
+          `[true-case-path]: basePath argument must be absolute. Received "${basePath}"`
+        )
+      }
+      basePath = normalize(basePath)
     }
+    filePath = normalize(filePath)
     const segments = getRelevantFilePathSegments(filePath)
-    if (!basePath) basePath = isAbsolute(filePath) ? '' : process.cwd()
-    if (isDriveLetter(segments[0])) segments[0] = segments[0].toUpperCase()
+    if (isAbsolute(filePath)) {
+      if (basePath) {
+        throw new Error(
+          '[true-case-path]: filePath must be relative when used with basePath'
+        )
+      }
+      basePath = isWindows
+        ? segments.shift().toUpperCase() // drive letter
+        : ''
+    } else if (!basePath) {
+      basePath = process.cwd()
+    }
     return sync
       ? iterateSync(basePath, filePath, segments)
       : iterateAsync(basePath, filePath, segments)
