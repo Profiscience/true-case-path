@@ -1,12 +1,14 @@
 'use strict'
 
 const assert = require('assert')
+const { exec: _exec } = require('child_process')
+const { platform } = require('os')
 const path = require('path')
+const { promisify: pify } = require('util')
 
-const {
-  trueCasePath,
-  trueCasePathSync
-} = require('../')
+const exec = pify(_exec)
+
+const { trueCasePath, trueCasePathSync } = require('../')
 
 const expected = path.join(__dirname, 'fixture/fOoBaR/BAZ')
 const requested = expected.toLowerCase()
@@ -16,22 +18,50 @@ function testSync() {
 }
 
 function testAsync() {
-  return trueCasePath(requested).then((actual) => assert.equal(actual, expected, 'trueCasePath (async) works'))
+  return trueCasePath(requested).then((actual) =>
+    assert.equal(actual, expected, 'trueCasePath (async) works')
+  )
 }
 
 function testRelative() {
-  assert.equal(trueCasePathSync('test/fixture/fOoBaR/BAZ'), expected, 'works with relative paths')
+  assert.equal(
+    trueCasePathSync(path.relative(process.cwd(), requested)),
+    expected,
+    'works with relative paths'
+  )
 }
 
 function testSpecialChars() {
-  assert.equal(trueCasePathSync('test/fixture/F[U&N%K)Y'), path.join(__dirname, 'fixture/f[u&n%k)y'), 'works with file names w/ special chars')
+  assert.equal(
+    trueCasePathSync('test/fixture/F[U&N%K)Y'),
+    path.join(__dirname, 'fixture/f[u&n%k)y'),
+    'works with file names w/ special chars'
+  )
+}
+
+async function testSharedHostingWorkaround() {
+  await exec('mkdir -p fixture/home/casey', { cwd: __dirname })
+  await exec('touch fixture/home/casey/fOoBaR', { cwd: __dirname })
+  await exec('chmod 100 fixture/home', { cwd: __dirname })
+
+  assert.throws(() => trueCasePathSync('fixture/home/casey/foobar', __dirname))
+
+  assert.equal(
+    trueCasePathSync('foobar', path.join(__dirname, 'fixture/home/casey')),
+    path.join(__dirname, 'fixture/home/casey/fOoBaR')
+  )
+  assert.equal(
+    await trueCasePath('foobar', path.join(__dirname, 'fixture/home/casey')),
+    path.join(__dirname, 'fixture/home/casey/fOoBaR')
+  )
 }
 
 Promise.all([
   testSync(),
   testRelative(),
   testAsync(),
-  testSpecialChars()
+  testSpecialChars(),
+  platform() === 'linux' ? testSharedHostingWorkaround() : Promise.resolve()
 ])
   .then(() => {
     console.log('All tests passed!')

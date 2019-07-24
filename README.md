@@ -19,6 +19,16 @@ const caseCorrectPath = trueCasePathSync(<fileSystemPath>)
 
 > **NOTE**: If no matching path exists, an error with be thrown.
 
+Optionally takes a second argument to use as the base path to begin case-correction from. This can be particularly useful within shared hosting environments since true-case-path relies on the ability to list a directory's contents in order to check the case and attempting to list the contents of `/` or `/home` will generally result in a permissions error.
+
+```typescript
+const { trueCasePath } = require('true-case-path')
+
+trueCasePath('code/my-app/sOmE-FiLe', '/home/casey')
+```
+
+> **NOTE**: When specifying a basePath, the first argument is expected to be the file path _relative to that basePath_. If the first argument is absolute, every path segment will be checked. basePath defaults to `process.cwd()` if not specified and the first argument is relative.
+
 ## Platforms
 
 Windows, OSX, and Linux
