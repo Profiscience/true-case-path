@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.1](https://github.com/Profiscience/true-case-path/compare/v2.2.0...v2.2.1) (2019-07-24)
+
+
+### Bug Fixes
+
+* **windows:** Drive letter bug ([1b736b7](https://github.com/Profiscience/true-case-path/commit/1b736b7))
+
+
+
 ## [2.2.0](https://github.com/Profiscience/true-case-path/compare/v2.0.0...v2.2.0) (2019-07-24)
 
 
