@@ -25,7 +25,7 @@ function testAsync() {
 
 function testRelative() {
   assert.equal(
-    trueCasePathSync(path.relative(process.cwd(), requested)),
+    trueCasePathSync(requested.replace(process.cwd() + '/', '')),
     expected,
     'works with relative paths'
   )
