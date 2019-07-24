@@ -1,6 +1,6 @@
 # true-case-path
 
-![Travis (.com)](https://img.shields.io/travis/com/Profiscience/true-case-path.svg)
+[![TravisCI Build Status][travis-ci-shield]][travis-ci]
 
 > Given a possibly case-variant version of an existing filesystem path, returns the absolute, case-exact, normalized version as stored in the filesystem.
 
@@ -44,3 +44,6 @@ trueCasePathSync('/users/guest') // OSX: -> '/Users/Guest'
 
 trueCasePathSync('c:\\users\\all users') // Windows: -> 'c:\Users\All Users'
 ```
+
+[travis-ci]: https://travis-ci.org/Profiscience/true-case-path
+[travis-ci-shield]: https://img.shields.io/travis/Profiscience/true-case-path/master.svg
