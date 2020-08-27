@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/Profiscience/true-case-path#readme",
   "devDependencies": {
-    "standard-version": "^7.0.0"
+    "standard-version": "^8.0.1"
   }
 }
